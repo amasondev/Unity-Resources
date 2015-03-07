@@ -7,12 +7,15 @@
 		_FadeDistance("Fade Distance", float) = 1.0
 	}
 	SubShader {
-		Tags { "RenderType"="Transparent" }
+		Tags { "RenderType"="Transparent" "Queue"="Transparent" }
 		LOD 200
+		Cull off
+		Blend SrcAlpha OneMinusSrcAlpha
+		ZWrite off
 		
 		CGPROGRAM
 		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard alpha fullforwardshadows vertex:vert
+		#pragma surface surf Standard alpha:fade fullforwardshadows vertex:vert
 
 		// Use shader model 3.0 target, to get nicer looking lighting
 		#pragma target 3.0
@@ -38,18 +41,17 @@
 			o.color = float4(_Color.rgb, _Color.a * alpha);
 		}
 
-		
-
 		void surf (Input IN, inout SurfaceOutputStandard o) {
 			// Albedo comes from a texture tinted by color
 			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * IN.color;
 			o.Albedo = c.rgb * c.a;
 			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
+			o.Metallic = _Metallic * c.a;
+			o.Smoothness = _Glossiness * c.a;
 			o.Alpha = c.a;
 		}
 		ENDCG
 	} 
 	FallBack "Diffuse"
+
 }

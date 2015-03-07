@@ -19,11 +19,11 @@
 			"CanUseSpriteAtlas"="True"
 		}
 
-		Cull Off
+		Cull off
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		CGPROGRAM
-		#pragma surface surf Lambert alpha addshadow vertex:vert
+		#pragma surface surf Lambert addshadow alpha:fade alphatest:_Cutoff vertex:vert
 		#pragma multi_compile DUMMY PIXELSNAP_ON
 
 		sampler2D _MainTex;

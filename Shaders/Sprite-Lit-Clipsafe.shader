@@ -25,7 +25,7 @@ Shader "Sprites/Diffuse-Shadow-Clipsafe"
 
 
 		CGPROGRAM
-		#pragma surface surf Lambert alpha addshadow vertex:vert
+		#pragma surface surf Lambert alpha:fade alphatest:_Cutoff addshadow vertex:vert
 		#pragma multi_compile DUMMY PIXELSNAP_ON
 
 		sampler2D _MainTex;
